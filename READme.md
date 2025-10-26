@@ -18,11 +18,11 @@ uvicorn +(filename):app --reload
 uvicorn books:app --reload
 
 # TO USE THE BROWSER, ADD the api endpoint
+ http://127.0.0.1:8000/books
 
-http://127.0.0.1:8000/books
+
 # TO USE SWAGGER, ADDD DOCS
-
-http://127.0.0.1:8000/docs
+http://127.0.0.1:8000/docs 
 
 
 # MEANING OF FAST API
@@ -84,6 +84,10 @@ Updating or deleting something by ID
 
 These are dynamic too — but they appear after the ? in the URL, not in the path.
 
+# What is a query parameter?
+
+Sort and filter through data that is not marked by path parameter
+
 # Example:
 
 @app.get("/books")
@@ -104,3 +108,18 @@ NOTE: FASTAPI execute endpoints from top to the bottom
 - POST has additional information that GET doesn't have
 
 # TO USE POST, WE NEED TO IMPORT "BODY" from FASTAPI
+
+# TO USE PUT, WE NEED TO IMPORT "BODY" from FASTAPI
+
+
+# PART 2 OF THE PROJECT
+
+Data validation
+Exception Handling
+Status codes, 
+Swagger configuration
+Python Request Objects
+
+
+
+
