@@ -120,6 +120,8 @@ Status codes,
 Swagger configuration
 Python Request Objects
 
+PYDANTICS
 
-
+- Python library that is used for data modeling,data parsing, and has efficient error handling
+- Pydantics is commonly used as a resource for data validation and how to handle data in fastAPI applications.
 
