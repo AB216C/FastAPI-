@@ -17,6 +17,12 @@ pip install fastapi uvicorn
 uvicorn +(filename):app --reload
 uvicorn books:app --reload
 
+# RUN UVICORN ON A DIFFERENT PORT
+
+You can simply start it on a new port, for example 8001:
+
+uvicorn books2:app --reload --port 8001
+
 # TO USE THE BROWSER, ADD the api endpoint
  http://127.0.0.1:8000/books
 

@@ -11,13 +11,15 @@ class Book:
     author:str
     description:str
     rating:int
+    published_date:int
 
-    def __init__(self, id, title, author, description, rating):
+    def __init__(self, id, title, author, description, rating, published_date):
         self.id = id
         self.title = title
         self.author = author 
         self.description = description
         self.rating = rating
+        self.published_date = published_date
 
 # Adding a this class for data validation purpose
 # class BookRequest(BaseModel):
@@ -29,20 +31,33 @@ class Book:
 
 # CHanging id data validation, you won't need to add id. It will be assigned authomatically, and chronologically
 class BookRequest(BaseModel):
-    id:Optional[int] = None 
+    id:Optional[int] = Field(title='id not required')
     title:str = Field(min_length=3)
     author:str = Field(min_length=1)
     description:str = Field(min_length=1,max_length=100)
     rating: int = Field(gt=-1, lt=6) #rating from 1 to 5(exclude -1 and 6)
+    published_date:int = Field(gt=-1, lt=2026)
+
+    model_config = {
+        "json_schema_extra":{
+            "example": {
+                "title":"A new book",
+                "author": "Coding with Niyongira",
+                "description": "A new description of a book",
+                "rating": 5,
+                "published_date":2000
+            }
+        }
+    }
 
 
 BOOKS = [
-    Book(1, 'Computer Science Pro', 'Coding with Niyongira', 'A very awesome book to read', 5),
-    Book(2, 'Be Fast with FastAPI', 'Coding with Niyongira', 'A great book', 4.9),
-    Book(3, 'Master endpoints', 'Coding with Niyongira', 'Rewarding book', 4.7),
-    Book(4, 'HP1', 'Author 1', 'Book Description', 1),
-    Book(5, 'HP1', 'Author 1', 'Book Description', 3),
-    Book(6, 'HP1', 'Author 1', 'Book Description', 2),
+    Book(1, 'Computer Science Pro', 'Coding with Niyongira', 'A very awesome book to read', 5, 2000),
+    Book(2, 'Be Fast with FastAPI', 'Coding with Niyongira', 'A great book', 5,2002),
+    Book(3, 'Master endpoints', 'Coding with Niyongira', 'Rewarding book', 3,2002),
+    Book(4, 'HP1', 'Author 1', 'Book Description', 1, 2000),
+    Book(5, 'HP1', 'Author 1', 'Book Description', 3, 1995),
+    Book(6, 'HP1', 'Author 1', 'Book Description', 2, 1900)
 
 ]
 
@@ -77,3 +92,55 @@ def find_book_id(book:Book):
 async def create_book(new_book:BookRequest):
     BOOKS.append(find_book_id(new_book))
     return BOOKS
+
+@app.get("/books/{book_id}")
+async def find_book(book_id: int):
+    for book in BOOKS:
+        if book.id == book_id:
+            return book
+        
+# Get a book by rating
+@app.get("/books/rating/{book_rating}")    # /rating was added to make the route look differnt from get a book by id 
+async def get_book_by_rating(book_rating:int):
+    list_books = []
+    for book in BOOKS:
+        if book.rating == book_rating:
+            list_books.append(book)
+    return list_books
+
+# DELETE A BOOK
+
+# @app.delete("/books/{book_id}")
+# async def delete_book(book_id: int):
+#     for book in BOOKS:
+#         if book.id == book_id:
+#             BOOKS.remove(book)
+#         return BOOKS
+
+#2nd method of deleting a book 
+
+@app.delete("/books/{book_id}")
+async def delete_book(book_id: int):
+    for i in range(len(BOOKS)):
+        if BOOKS[i].id == book_id:
+            BOOKS.pop(i)
+        return BOOKS
+
+
+# UPDATE A BOOK-1ST METHOD
+
+@app.put("/books/update_book")
+async def update_book(book:BookRequest):
+    for i in range(len(BOOKS)):
+        if BOOKS[i].id == book.id: 
+            BOOKS[i] = book
+        return BOOKS
+
+# Get books by published date
+@app.get("/books/pub_date/{pub_date}")
+async def get_book_by_pub_date(pub_date:int):
+    return_books = []
+    for book in BOOKS:
+        if book.published_date == pub_date:
+            return_books.append(book)
+    return return_books
