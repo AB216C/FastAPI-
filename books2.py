@@ -1,4 +1,4 @@
-from fastapi import FastAPI, Body
+from fastapi import FastAPI, Body, Path, Query
 from pydantic import BaseModel,Field
 from typing import Optional
 
@@ -31,7 +31,7 @@ class Book:
 
 # CHanging id data validation, you won't need to add id. It will be assigned authomatically, and chronologically
 class BookRequest(BaseModel):
-    id:Optional[int] = Field(title='id not required')
+    id:Optional[int] = None
     title:str = Field(min_length=3)
     author:str = Field(min_length=1)
     description:str = Field(min_length=1,max_length=100)
@@ -94,7 +94,7 @@ async def create_book(new_book:BookRequest):
     return BOOKS
 
 @app.get("/books/{book_id}")
-async def find_book(book_id: int):
+async def find_book(book_id: int=Path(gt=0, lt=5)):
     for book in BOOKS:
         if book.id == book_id:
             return book
@@ -117,10 +117,11 @@ async def get_book_by_rating(book_rating:int):
 #             BOOKS.remove(book)
 #         return BOOKS
 
-#2nd method of deleting a book 
 
+#2nd method of deleting a book 
+#Path data validation added
 @app.delete("/books/{book_id}")
-async def delete_book(book_id: int):
+async def delete_book(book_id: int=Path(gt=0)):
     for i in range(len(BOOKS)):
         if BOOKS[i].id == book_id:
             BOOKS.pop(i)
@@ -138,9 +139,11 @@ async def update_book(book:BookRequest):
 
 # Get books by published date
 @app.get("/books/pub_date/{pub_date}")
-async def get_book_by_pub_date(pub_date:int):
+async def get_book_by_pub_date(pub_date:int=Path(gt=1000,lt=2000)):   #Any id less than 0, the error will occur
     return_books = []
     for book in BOOKS:
         if book.published_date == pub_date:
             return_books.append(book)
     return return_books
+
+# Delete a book by ID

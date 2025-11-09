@@ -21,7 +21,7 @@ uvicorn books:app --reload
 
 You can simply start it on a new port, for example 8001:
 
-uvicorn books2:app --reload --port 8001
+uvicorn books2:app --reload --port 8004
 
 # TO USE THE BROWSER, ADD the api endpoint
  http://127.0.0.1:8000/books
@@ -130,4 +130,16 @@ PYDANTICS
 
 - Python library that is used for data modeling,data parsing, and has efficient error handling
 - Pydantics is commonly used as a resource for data validation and how to handle data in fastAPI applications.
+
+# DATA VALIDATION IN PYTHON
+
+Using "Path()"
+
+- Path(gt=0); id intered and is less than zero, the error will be thrown
+
+Using "Query()"
+- Query(gt=0, lt=6)   --------id intered and is less than zero, the error will be thrown.
+
+However, this is only used for Filter, search, sort, paginate
+
 
