@@ -143,3 +143,20 @@ Using "Query()"
 However, this is only used for Filter, search, sort, paginate
 
 
+# Status Codes
+
+HTTP Status Code: Used to help client(user or system submitting data to the server) to understand what happened on the server side of the application
+
+It allows everyone who sends the request to know if their submission was successful or not
+
+1xx --> Information Response: Request Processing
+2xx --> Success: Request Successfully Complete
+3xx --> Redirection: Further Action must be Complete
+4xx --> Client Errors: An error was caused by the client
+5xx --> Server Errors: An error occured on the server
+
+
+2xx --> Success: Request Successfully Complete:
+
+200:OK --> Standard Response for a Successful Request. Commonly used for sucessfull Get Request when data is being returned
+201: Created -->

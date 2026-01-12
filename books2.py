@@ -108,6 +108,16 @@ async def get_book_by_rating(book_rating:int):
             list_books.append(book)
     return list_books
 
+#Second Method-Using Query Parameter-Including Data Validation
+@app.get("/books/")    # /rating was added to make the route look differnt from get a book by id 
+async def get_book_by_rating(book_rating:int=Query(gt=0,lt=6)):
+    list_books = []
+    for book in BOOKS:
+        if book.rating == book_rating:
+            list_books.append(book)
+    return list_books
+
+
 # DELETE A BOOK
 
 # @app.delete("/books/{book_id}")
@@ -146,4 +156,11 @@ async def get_book_by_pub_date(pub_date:int=Path(gt=1000,lt=2000)):   #Any id le
             return_books.append(book)
     return return_books
 
-# Delete a book by ID
+#Second Method-Get book by Published date-Including Data Validation
+@app.get("/books/publish/")
+async def get_book_publish_date(pub_date:int=Query(gt=1800,lt=2031)):
+    return_books = []
+    for book in BOOKS:
+        if book.published_date == pub_date:
+            return_books.append(book)
+    return return_books
