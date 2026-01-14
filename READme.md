@@ -159,4 +159,18 @@ It allows everyone who sends the request to know if their submission was success
 2xx --> Success: Request Successfully Complete:
 
 200:OK --> Standard Response for a Successful Request. Commonly used for sucessfull Get Request when data is being returned
-201: Created -->
+201: Created --> The request has been successfull, creating a new resource. Used when request create an entity
+204: No Content --> The request has been successfull, did not create an entity nor return anything. Commonly used with put request
+
+4xxx --> Client Errors Status Codes
+
+400: Bad Request--> Can not process the request due to client error. Commonly used for invalid requests methods
+401: Unauthorized --> Client does not have valid authentication for target resource
+404: Not found --> The client requested resource can not be found
+422: Unprocessable Entity --> Semantic Errors in Client Request
+
+5xxx --> Server Status Codes:
+
+500: Internal Server Error --> Generic Error Message, when unexpected issue on the server happened
+
+

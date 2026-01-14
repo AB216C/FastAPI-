@@ -1,4 +1,4 @@
-from fastapi import FastAPI, Body, Path, Query
+from fastapi import FastAPI, Body, Path, Query,HTTPException
 from pydantic import BaseModel,Field
 from typing import Optional
 
@@ -94,10 +94,11 @@ async def create_book(new_book:BookRequest):
     return BOOKS
 
 @app.get("/books/{book_id}")
-async def find_book(book_id: int=Path(gt=0, lt=5)):
+async def find_book(book_id: int=Path(gt=0)):
     for book in BOOKS:
         if book.id == book_id:
             return book
+    raise HTTPException(status_code=404, detail = 'item not found')
         
 # Get a book by rating
 @app.get("/books/rating/{book_rating}")    # /rating was added to make the route look differnt from get a book by id 
@@ -131,11 +132,12 @@ async def get_book_by_rating(book_rating:int=Query(gt=0,lt=6)):
 #2nd method of deleting a book 
 #Path data validation added
 @app.delete("/books/{book_id}")
-async def delete_book(book_id: int=Path(gt=0)):
+async def delete_book(book_id: int=Path(..., gt=0)):
     for i in range(len(BOOKS)):
         if BOOKS[i].id == book_id:
             BOOKS.pop(i)
-        return BOOKS
+            return BOOKS
+    raise HTTPException(status_code = 404, detail = "item not found")
 
 
 # UPDATE A BOOK-1ST METHOD
@@ -145,7 +147,8 @@ async def update_book(book:BookRequest):
     for i in range(len(BOOKS)):
         if BOOKS[i].id == book.id: 
             BOOKS[i] = book
-        return BOOKS
+            return BOOKS
+    raise HTTPException(status_code=404, detail="item not found")
 
 # Get books by published date
 @app.get("/books/pub_date/{pub_date}")
