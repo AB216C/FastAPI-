@@ -1,4 +1,4 @@
-from fastapi import FastAPI, Body, Path, Query,HTTPException
+from fastapi import FastAPI, Body, Path, Query,HTTPException, status
 from pydantic import BaseModel,Field
 from typing import Optional
 
@@ -61,7 +61,7 @@ BOOKS = [
 
 ]
 
-@app.get("/books")
+@app.get("/books", status_code= status.HTTP_200_OK)
 async def read_all_books():
     return BOOKS
 
@@ -88,12 +88,12 @@ def find_book_id(book:Book):
     return book
 
 
-@app.post("/books")
+@app.post("/books", status_code = status.HTTP_201_CREATED)
 async def create_book(new_book:BookRequest):
     BOOKS.append(find_book_id(new_book))
     return BOOKS
 
-@app.get("/books/{book_id}")
+@app.get("/books/{book_id}",status_code= status.HTTP_200_OK)
 async def find_book(book_id: int=Path(gt=0)):
     for book in BOOKS:
         if book.id == book_id:
@@ -110,7 +110,7 @@ async def get_book_by_rating(book_rating:int):
     return list_books
 
 #Second Method-Using Query Parameter-Including Data Validation
-@app.get("/books/")    # /rating was added to make the route look differnt from get a book by id 
+@app.get("/books/", status_code=status.HTTP_200_OK)    # /rating was added to make the route look differnt from get a book by id 
 async def get_book_by_rating(book_rating:int=Query(gt=0,lt=6)):
     list_books = []
     for book in BOOKS:
@@ -131,7 +131,7 @@ async def get_book_by_rating(book_rating:int=Query(gt=0,lt=6)):
 
 #2nd method of deleting a book 
 #Path data validation added
-@app.delete("/books/{book_id}")
+@app.delete("/books/{book_id}", status_code = status.HTTP_204_NO_CONTENT)
 async def delete_book(book_id: int=Path(..., gt=0)):
     for i in range(len(BOOKS)):
         if BOOKS[i].id == book_id:
@@ -142,7 +142,7 @@ async def delete_book(book_id: int=Path(..., gt=0)):
 
 # UPDATE A BOOK-1ST METHOD
 
-@app.put("/books/update_book")
+@app.put("/books/update_book",status_code=status.HTTP_204_NO_CONTENT)
 async def update_book(book:BookRequest):
     for i in range(len(BOOKS)):
         if BOOKS[i].id == book.id: 
@@ -151,7 +151,7 @@ async def update_book(book:BookRequest):
     raise HTTPException(status_code=404, detail="item not found")
 
 # Get books by published date
-@app.get("/books/pub_date/{pub_date}")
+@app.get("/books/pub_date/{pub_date}",status_code=status.HTTP_200_OK)
 async def get_book_by_pub_date(pub_date:int=Path(gt=1000,lt=2000)):   #Any id less than 0, the error will occur
     return_books = []
     for book in BOOKS:
@@ -160,7 +160,7 @@ async def get_book_by_pub_date(pub_date:int=Path(gt=1000,lt=2000)):   #Any id le
     return return_books
 
 #Second Method-Get book by Published date-Including Data Validation
-@app.get("/books/publish/")
+@app.get("/books/publish/",status_code=status.HTTP_200_OK)
 async def get_book_publish_date(pub_date:int=Query(gt=1800,lt=2031)):
     return_books = []
     for book in BOOKS:
