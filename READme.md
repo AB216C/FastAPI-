@@ -135,10 +135,10 @@ PYDANTICS
 
 Using "Path()"
 
-- Path(gt=0); id intered and is less than zero, the error will be thrown
+- Path(gt=0); id entered and is less than zero, the error will be thrown
 
 Using "Query()"
-- Query(gt=0, lt=6)   --------id intered and is less than zero, the error will be thrown.
+- Query(gt=0, lt=6)   --------id entered and is less than zero, the error will be thrown.
 
 However, this is only used for Filter, search, sort, paginate
 
@@ -172,5 +172,45 @@ It allows everyone who sends the request to know if their submission was success
 5xxx --> Server Status Codes:
 
 500: Internal Server Error --> Generic Error Message, when unexpected issue on the server happened
+
+
+NEXT CHAPTER
+
+Authorization and Authentication
+
+Web Page   -->                   FastAPI     <--                        Database
+           <--                   (Server)    -->   
+
+Define Database?
+
+- Organized Collection of Structured Information of Data, which is stored in computer system
+The data can be 
+- Data can be easily accessed
+- Data can be easily modified
+- The data can be controlled and organized
+- Many databases uses Structured Query Language(SQL) to modify and write data
+
+Define Data?
+
+- Data can be related to any object
+- For example, user on an application may have:
+   Name, Age and Email
+- All of these is data
+
+Thus, Database allow the management of this data, since data is just data on its own
+
+Data are organized in how Data can be retrieved, stored and modified
+
+There are many types of Database Management Systems(DBMS): 
+- SQLITE
+- MYSQL
+- PostGRESQL
+
+Define SQL?
+
+- Standard language for dealing with relational databases
+- With Database records, SQL can be used different things
+      Those include READ, CREATE, UPDATE, AND DELETE(CRUD OPERATIONS) 
+
 
 
