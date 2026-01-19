@@ -225,4 +225,15 @@ Define SQL?
       Those include READ, CREATE, UPDATE, AND DELETE(CRUD OPERATIONS) 
 
 
+## INSTALLATION OF SQL ALCHEMY
+* Benefit:
+       - To connect FastAPI to databases(MySQL, SQLite, PostgreSQL)
+       - To write databases queries in Python instead of raw SQL querries
+       - Map Python classes-> database tables(ORM)
+       - Manage relationships, joins, and transactions
 
+
+
+## CREATING MODELS
+
+- Helps SQLALCHEMY to understand what kind of database tables to create in the future
