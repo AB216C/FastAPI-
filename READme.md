@@ -21,7 +21,14 @@ uvicorn books:app --reload
 
 You can simply start it on a new port, for example 8001:
 
-uvicorn books2:app --reload --port 8004
+- uvicorn books2:app --reload --port 8004
+
+## For folders, don't use:
+- uvicorn IntroFastApi/books2:app --reload
+
+## Include dot notation (.) to import-Use the following:
+
+- uvicorn IntroFastApi/books2:app --reload
 
 # TO USE THE BROWSER, ADD the api endpoint
  http://127.0.0.1:8000/books
@@ -30,6 +37,11 @@ uvicorn books2:app --reload --port 8004
 # TO USE SWAGGER, ADDD DOCS
 http://127.0.0.1:8000/docs 
 
+# Why adding __init__.py to every fastApiPython folder?
+- Marks the directly as python package
+- Wether empty or not it is always useful
+- Makes the app portable, stable and professional 
+- Prevent import and reload errors
 
 # MEANING OF FAST API
 
